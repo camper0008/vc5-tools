@@ -1,0 +1,52 @@
+
+%define KBD_STATUS 0x1ffc
+%define KBD_CODE 0x1ffe
+%define VCD 0x2000
+
+%define KBD_FLAG_IS_RELEASE 0x1
+
+    mov rsp, 0x1000
+    mov rbp, rsp
+
+    ; setup vcd
+    mov r0, VCD
+    mov [0x700], r0
+    lvcd 0x700
+
+    ; setup kbd
+    mov r0, KBD_STATUS
+    mov [0x702], r0
+    mov r0, KBD_CODE
+    mov [0x704], r0
+    mov r0, key_press_int
+    mov [0x706], r0
+    lkbd 0x702
+
+    ; init counter
+    mov r0, 0
+    mov [0x600], r0
+
+main_loop:
+    hlt
+    jmp main_loop
+    
+key_press_int:
+    mov r0, [KBD_STATUS]
+    and r0, r0, KBD_FLAG_IS_RELEASE
+    jnz r0, .leave
+
+    mov r0, [0x600]
+    add r0, r0, VCD
+    mov r1, [KBC_CODE]
+    add r1, r1, 61
+    mov byte [r0], r1
+
+    mov r0, [0x600]
+    add r0, r0, 1
+    mov [0x600], r0
+
+.leave:
+    reti
+
+
+; vim: syntax=nasm
