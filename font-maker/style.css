@@ -1,0 +1,88 @@
+:root {
+    color-scheme: light dark;
+}
+* {
+    box-sizing: border-box;
+}
+table {
+    border-collapse: collapse;
+}
+td {
+    border-top: 1px solid gray;
+    min-width: 70px;
+    text-align: center;
+    padding: 4px;
+}
+
+grapheme-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    font-family: monospace;
+}
+
+selected-grapheme-info {
+    font-family: monospace;
+    white-space: pre;
+    font-size: 1.25rem;
+}
+
+grapheme-list grapheme {
+    border: 1px solid gray;
+    padding: 0.5rem;
+    white-space: pre;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+grapheme:hover {
+    border-color: currentcolor;
+    cursor: pointer;
+}
+
+grapheme[active] {
+    outline: 1px solid red;
+}
+
+grapheme-not-rendered {
+    color: red;
+}
+
+grapheme-list canvas {
+    width: 48px;
+    height: 48px;
+    border: 1px solid gray;
+}
+subitem {
+    border: 1px solid gray;
+    padding: 0.5rem;
+
+    * {
+        margin: 0;
+    }
+}
+
+workspace {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+interactable-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid gray;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+interactable-container canvas {
+    cursor: pointer;
+    border: 1px solid gray;
+    max-width: max-content;
+}

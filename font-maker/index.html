@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vc5 font maker</title>
+        <script src="./font_maker.js" type="module" defer></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <workspace>
+            <interactable-container>
+                <canvas id="interact"></canvas>
+                <selected-grapheme-info> </selected-grapheme-info>
+                <subitem>
+                    <code>0x</code><input id="overwrite">
+                </subitem>
+                <subitem>
+                    <pre><code id="export-area"></code></pre>
+                </subitem>
+            </interactable-container>
+            <grapheme-list></grapheme-list>
+        </workspace>
+    </body>
+</html>
