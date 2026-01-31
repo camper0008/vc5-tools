@@ -141,6 +141,7 @@ class Grapheme {
 }
 
 const overwrite = document.querySelector("#overwrite");
+const importButton = document.querySelector("#import");
 const exportCode = document.querySelector("#export-area");
 const interact = document.querySelector("#interact");
 const graphemeListElement = document.querySelector("grapheme-list");
@@ -192,6 +193,14 @@ function renderExport() {
     }).join("\n");
 }
 
+globalThis.importRaw = function (raw) {
+    const lines = raw.split("\n")
+        .flatMap((x) =>
+            x.split(" ").map((x) => x.trim()).filter((x) => x.startsWith("0x"))
+        );
+    console.log(lines);
+};
+
 function renderEverything() {
     Grapheme.render(interact, selectedGrapheme.state);
     Grapheme.render(selectedGrapheme.canvas, selectedGrapheme.state);
@@ -215,6 +224,25 @@ interact.addEventListener("click", (ev) => {
         Math.floor,
     );
     selectedGrapheme.state[y * 8 + x] = !selectedGrapheme.state[y * 8 + x];
+    renderEverything();
+});
+
+importButton.addEventListener("click", () => {
+    const input = prompt("statement");
+    if (!input) {
+        return;
+    }
+    const graphemeValues = input.match(/[abcdefABCDEF0123456789]{16}/g);
+    if (graphemeValues.length !== 128) {
+        alert(
+            `expected 128 elements to be included, got ${graphemeValues.length}`,
+        );
+        return;
+    }
+    for (let i = 0; i < graphemeValues.length; ++i) {
+        Grapheme.setStateFromHexString(graphemes[i].state, graphemeValues[i]);
+        Grapheme.render(graphemes[i].canvas, graphemes[i].state);
+    }
     renderEverything();
 });
 
